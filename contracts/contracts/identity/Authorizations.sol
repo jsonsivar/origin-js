@@ -8,7 +8,10 @@ contract Authorizations {
 
     // TODO: do we want to support allowing all functions? (maybe another mapping that gets checked before checking function specific perms)
 
-    // TODO: constructor should add the msg.sender to have permissions to call AddAuthorization
+    constructor() public {
+        string memory functionSignature = "AddAuthorization(address _targetAddress,address _caller,bytes4 _functionSelector,bool _permission)";
+        authorizations[this][msg.sender][bytes4(keccak256(functionSignature))] = true;
+    }
 
     function AddAuthorization(
         address _targetAddress,
